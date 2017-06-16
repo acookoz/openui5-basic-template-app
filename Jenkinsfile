@@ -5,11 +5,11 @@ pipeline {
     }
     stages {
         stage('Build') {
-            sh 'npm install'
-            sh 'grunt --no-color lint build'
-
-
-        },    
+            steps {
+                sh 'npm install'
+                sh 'grunt --no-color lint build'
+            }
+        }     
         stage('Deploy') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'ABAP_750', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
