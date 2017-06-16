@@ -1,6 +1,9 @@
+/* eslint-env es6, eslint-disable no-var, prefer-arrow-callback */
 'use strict';
 
 module.exports = function(grunt) {
+    const sUser = grunt.option("user");
+    const sPwd = grunt.option("pwd");
 
     grunt.initConfig({
 
@@ -53,6 +56,32 @@ module.exports = function(grunt) {
             }
         },
 
+        nwabap_ui5uploader: {
+            options: {
+                conn: {
+                    server: 'http://vhcalnplci.dummy.nodomain:8000',
+                },
+                auth: {
+                    user: sUser,
+                    pwd: sPwd
+                }
+            },
+            upload_build: {
+                options: {
+                    ui5: {
+                        package: 'ZZ_UI5_REPO',
+                        bspcontainer: 'ZZ_UI5_TRACKED',
+                        bspcontainer_text: 'UI5 upload',
+                        transportno: 'NPLK900028'
+                    },
+                    resources: {
+                        cwd: 'dist',
+                        src: '**/*.*'
+                    }
+                }
+            }
+        },
+
         clean: {
             dist: '<%= dir.dist %>/'
         },
@@ -83,6 +112,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-openui5');
     grunt.loadNpmTasks('grunt-eslint');
     grunt.loadNpmTasks("grunt-zip");
+    grunt.loadNpmTasks('grunt-nwabap-ui5uploader');
 
     // Server task
     grunt.registerTask('serve', function(target) {
@@ -95,8 +125,9 @@ module.exports = function(grunt) {
     // Build task
     grunt.registerTask('build', ['openui5_preload', 'copy']);
 
-    // Create Zip
-    grunt.registerTask('createZip', ["lint"]);
+    // deploy
+    grunt.registerTask('deploy', ['lint', 'build', 'nwabap_ui5uploader']);
+
 
     // Default task
     grunt.registerTask('default', [
