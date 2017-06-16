@@ -1,8 +1,5 @@
 pipeline {
-    agent any
-    tools {
-        nodejs 'latest'
-    }
+    agent { docker 'nodejs-bower-grunt' }
     stages {
         stage('Build') {
             steps {
