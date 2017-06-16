@@ -6,8 +6,10 @@ pipeline {
     stages {
         stage('Example') {
             steps {
-                sh 'npm install'
-                sh 'grunt --no-color deploy --user=developer --pwd=Appl1ance'
+                withCredentials([usernamePassword(credentialsId: 'ABAP_750', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh 'npm install'
+                    sh 'grunt --no-color deploy --user=$USERNAME --pwd=$PASSWORD'
+                }
             }
         }
     }
