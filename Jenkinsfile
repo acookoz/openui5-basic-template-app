@@ -4,7 +4,7 @@ pipeline {
         nodejs 'latest'
     }
     stages {
-        stage('Example') {
+        stage('Deploy') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'ABAP_750', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh 'npm install'

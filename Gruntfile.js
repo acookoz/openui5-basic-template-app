@@ -126,7 +126,7 @@ module.exports = function(grunt) {
     grunt.registerTask('build', ['openui5_preload', 'copy']);
 
     // deploy
-    grunt.registerTask('deploy', ['lint', 'build', 'nwabap_ui5uploader']);
+    grunt.registerTask('deploy', ['nwabap_ui5uploader']);
 
 
     // Default task
